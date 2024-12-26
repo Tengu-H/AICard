@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     ParticleSystem m_playerParticle;
     [SerializeField]
     AudioSource punishSFX;
-    
+
     public float m_playCD;
 
     public float m_playTimer;
@@ -103,6 +103,9 @@ public class GameManager : MonoBehaviour
     List<List<RuleSet>> m_rulesPriviledgedSets;
     List<bool> m_rulesForbiddenSets_isAnd;
     List<bool> m_rulesPriviledgedSets_isAnd;
+
+    List<string> m_rulesPrivs;
+    List<string> m_rulesForbs;
 
     public event Action OnPlayerPlayed;
     public GameObject Pile => m_pile;
@@ -124,6 +127,9 @@ public class GameManager : MonoBehaviour
         m_rulesPriviledgedSets = new List<List<RuleSet>>();
         m_rulesForbiddenSets_isAnd = new List<bool>();
         m_rulesPriviledgedSets_isAnd = new List<bool>();
+
+        m_rulesPrivs = new List<string>();
+        m_rulesForbs = new List<string>();
         m_pileCards = new List<Card>();
         pilePos = m_pile.transform.position;
         for (int i = 0; i < m_startHandCount; i++)
@@ -548,6 +554,17 @@ public class GameManager : MonoBehaviour
         else
         {
             m_rulesPriviledged.Add(rule);
+        }
+    }
+    public void AddRule(bool isForbid, string rule)
+    {
+        if (isForbid)
+        {
+            m_rulesForbs.Add(rule);
+        }
+        else
+        {
+            m_rulesPrivs.Add(rule);
         }
     }
     public void FinishMakeRule(bool isAnd, string description)
