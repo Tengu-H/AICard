@@ -49,7 +49,7 @@ public class Card : MonoBehaviour
         }
         else
         {
-            //Debug.LogError("Wrong card id, Something wrong with setup.");
+            Debug.LogError("Wrong card id, Something wrong with setup£º " + color + " " + number);
         }
         pile = GameObject.Find("GameManager").GetComponent<GameManager>().Pile;
         toShake = m_cardVisual.transform.GetChild(0);
@@ -87,7 +87,7 @@ public class Card : MonoBehaviour
         slot.AddComponent<RectTransform>();
         slot.transform.SetParent(pile.transform);
         transform.SetParent(slot.transform);
-        slot.transform.localPosition = Vector3.zero;
+        slot.transform.localPosition = Random.onUnitSphere * 25f;
         transform.localPosition = Vector3.zero;
         if (!isFirst)
         {

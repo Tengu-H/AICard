@@ -239,7 +239,6 @@ public class GlmRuleManager : MonoBehaviour
         }
         // 发送GLM函数请求，注意需要将functionTool放在一个List<GlmTool>工具列表里
         while (!outputFinished);
-        _gameManager.FinishMakeRule(outputIsAnd, playerInput);
         _inputFieldText.text = _originalInputText;
         _button.interactable = true;
 

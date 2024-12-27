@@ -346,7 +346,7 @@ public class GameManager : MonoBehaviour
         var comparison = parts[2].Trim();
 
         Card[] handCards = m_hand.GetComponentsInChildren<Card>();
-        Card[] oppHandCards = m_hand.GetComponentsInChildren<Card>();
+        Card[] oppHandCards = m_OpponentHand.GetComponentsInChildren<Card>();
 
         Card card1 = GetCard(obj1, playedCard, m_pileCards[0], handCards, oppHandCards);
         Card card2 = GetCard(obj2, playedCard, m_pileCards[0], handCards, oppHandCards);
@@ -361,16 +361,15 @@ public class GameManager : MonoBehaviour
         if (obj.StartsWith("hand card"))
         {
             var parts = obj.Split('_');
-            var owner = parts[1];
-            var specifier = parts[2];
+            var specifier = parts[1];
 
-            Card[] cards = owner == "¼º·½" ? handCards : oppHandCards;
+            Card[] cards = isPlayer ? handCards : oppHandCards;
 
             if (specifier == "biggest") return cards.OrderByDescending(c => c.Number).FirstOrDefault();
             if (specifier == "smallest") return cards.OrderBy(c => c.Number).FirstOrDefault();
             if (int.TryParse(specifier, out int index))
             {
-                return index > 0 ? cards[index - 1] : cards[cards.Length + index];
+                return index > 0 ? cards[Math.Clamp(index - 1,0,9)] : cards[Math.Clamp(cards.Length + index,0,9)];
             }
         }
 
@@ -378,7 +377,7 @@ public class GameManager : MonoBehaviour
         var color = colorNumber[0];
         var number = colorNumber.Length > 1 ? colorNumber[1] : null;
 
-        Card.CardColor cardColor;
+        Card.CardColor cardColor = Card.CardColor.Green;
         switch (color)
         {
             case "green":
@@ -390,11 +389,22 @@ public class GameManager : MonoBehaviour
             case "yellow":
                 cardColor = Card.CardColor.Yellow;
                 break;
+            case "odd":
+                number = "5";
+                break;
+            case "even":
+                number = "4";
+                break;
+            case "prime":
+                number = "5";
+                break;
+            case "nonprime":
+                number = "4";
+                break;
             default:
                 if (int.TryParse(color, out int num))
                 {
                     number = color;
-                    cardColor = Card.CardColor.Green; // Default color if only number is provided
                 }
                 else
                 {
@@ -403,7 +413,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        int cardNumber = number != null ? int.Parse(number) : 0;
+        int cardNumber = number != null ? int.Parse(number) : 11;
         Card toReturn = Instantiate(m_cardPrefab, 10000f * Vector3.up, Quaternion.identity);
         toReturn.Setup(cardColor, cardNumber);
         return toReturn;
@@ -744,24 +754,10 @@ public class GameManager : MonoBehaviour
         {
             m_rulesPrivs.Add(rule);
         }
-    }
-    public void FinishMakeRule(bool isAnd, string description)
-    {
-        List<RuleSet> toAdd = new List<RuleSet>(m_rulesForbidden);
-        if (m_rulesForbidden.Count > 0)
-        {
-            m_rulesForbiddenSets.Add(toAdd);
-            m_rulesForbiddenSets_isAnd.Add(isAnd);
-        }
-        toAdd = new List<RuleSet>(m_rulesPriviledged);
-        if (m_rulesPriviledged.Count > 0)
-        {
-            m_rulesPriviledgedSets_isAnd.Add(isAnd);
-            m_rulesPriviledgedSets.Add(toAdd);
-        }
-        m_rulesPriviledged.Clear();
-        m_rulesForbidden.Clear();
 
+    }
+    public void FinishMakeRule(string description)
+    {
         GameObject rule = Instantiate(m_rulePrefab, m_rules.transform);
         rule.GetComponentInChildren<Text>().text = description;
         m_ruleButton.interactable = false;
