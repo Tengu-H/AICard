@@ -49,7 +49,7 @@ public class Card : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Wrong card id, Something wrong with setup.");
+            //Debug.LogError("Wrong card id, Something wrong with setup.");
         }
         pile = GameObject.Find("GameManager").GetComponent<GameManager>().Pile;
         toShake = m_cardVisual.transform.GetChild(0);

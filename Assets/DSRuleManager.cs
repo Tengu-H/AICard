@@ -27,6 +27,8 @@ public class DSRuleManager : MonoBehaviour
     [SerializeField]
     Button _button;
 
+    
+
 
     // 用于存储对话历史
     private List<Dictionary<string, string>> messages = new List<Dictionary<string, string>>();
@@ -54,7 +56,8 @@ public class DSRuleManager : MonoBehaviour
             "然后是比较对象1,比较对象2,比较方式这三个参数，通过逗号链接。如果需要多次比较，输出一个冒号:，然后输出{OR,AND,XOR}中的" +
             "一个用以判断这些规则如何组合，例如用OR使复数个判断逻辑只需一个成功即规则生效，例如true:played card,red_odd,equal:OR:played card,green_even,equal 这一格式表示红色奇数卡与绿色偶数卡永远能打" +
             "以及用AND或OR遍历手牌来查看手牌是否符合某些条件，遍历自己手上的卡时只需衔接hand card_己方_1~hand card_己方_10，因为最多只会有十张手牌。" +
-            "请注意这是唯一的检查所有手牌的手段，可能需要输出超过10组参数。{{{请注意涉及anycard的规则不会参与任何组合，只会单独存在，做到“所有牌都能打”之类的规则，而在某些条件下所有牌都能或不能打不需要与anycard进行比较，只需调整输出结果。}}}" +
+            "请注意这是唯一的检查所有手牌的手段，可能需要输出超过10组参数。{{{请注意涉及anycard的规则不会参与任何组合，只会单独存在，做到“所有牌都能打”之类的规则，而在某些条件下所有牌都能或不能打不需要与anycard进行比较，只需调整输出结果。" +
+            "并且不要把文字中的“和”简单理解为规则以AND组合，例如对红色和黄色卡生效的规则实际上需要以OR进行组合。}}}" +
             "然后再输出一个冒号:，接下来重复下一次比较的比较对象1,比较对象2,比较方式这三个参数，直到规则完成。" +
             "请注意严格按照给定的枚举格式生成，所有标点符号都是英文标点。玩家未指定比较对象时，通常是打出的牌与上一张打出的牌进行比较。" +
             "当玩家的规则无法被这一流程实现，或者与制定规则无关时，不要输出参数，而是输出一个“做不到！”" } });
@@ -111,11 +114,11 @@ public class DSRuleManager : MonoBehaviour
             {
                 if (parts[0] == "true")
                 {
-                    _gameManager.AddRule(true, botMessage);
+                    _gameManager.AddRule(false, botMessage);
                 }
                 else if (parts[0] == "false")
                 {
-                    _gameManager.AddRule(false, botMessage);
+                    _gameManager.AddRule(true, botMessage);
                 }
                 else
                 {
