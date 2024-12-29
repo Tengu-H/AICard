@@ -42,14 +42,14 @@ public class Card : MonoBehaviour
         CardVisual.transform.position = transform.position;
         CardVisual.transform.rotation = transform.rotation;
         CardVisual.GetComponent<CardTilter>().LerpMovement();
-        if (id >= 0)
+        if (id >= 0 && id <= 29)
         {
             Sprite sprite = m_manager.CardSprites[id];
             m_image.sprite = sprite;
         }
         else
         {
-            Debug.LogError("Wrong card id, Something wrong with setup£º " + color + " " + number);
+            //Debug.LogError("Wrong card id, Something wrong with setup£º " + color + " " + number);
         }
         pile = GameObject.Find("GameManager").GetComponent<GameManager>().Pile;
         toShake = m_cardVisual.transform.GetChild(0);
@@ -82,6 +82,16 @@ public class Card : MonoBehaviour
     public void Play(bool isFirst)
     {
         if (m_gameManager.isEnd) return;
+        bool isValid = true;
+        if (!isFirst)
+        {
+            isValid = m_gameManager.SetPlayedCard(this);
+
+        }
+        else
+        {
+            m_gameManager.PileCards.Insert(0, this);
+        }
         GetComponent<Button>().interactable = false;
         GameObject slot = new GameObject("Slot");
         slot.AddComponent<RectTransform>();
@@ -89,19 +99,13 @@ public class Card : MonoBehaviour
         transform.SetParent(slot.transform);
         slot.transform.localPosition = Random.onUnitSphere * 25f;
         transform.localPosition = Vector3.zero;
-        if (!isFirst)
-        {
-            bool isValid = m_gameManager.SetPlayedCard(this);
-            m_gameManager.ConcludePlay(isValid, this);
-
-        }
-        else
-        {
-            m_gameManager.PileCards.Insert(0, this);
-        }
         CardVisual.transform.SetAsLastSibling();
         CardVisual.GetComponent<CardTilter>().LerpMovement();
         m_gameManager.MoveCards();
+        if (!isFirst)
+        {
+            m_gameManager.ConcludePlay(isValid, this);
+        }
     }
     public void Shake()
     {

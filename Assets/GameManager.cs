@@ -130,6 +130,8 @@ public class GameManager : MonoBehaviour
     int currWinStreak = 0;
     int maxWinStreak = 0;
     string filePath;
+    bool isTutorial;
+    bool tutorialShowed = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -157,6 +159,7 @@ public class GameManager : MonoBehaviour
         m_ruleButton.interactable = false;
         filePath = Path.Combine(Application.persistentDataPath, "saveData.txt");
         LoadData();
+        isTutorial = FindObjectOfType<TutorialManger>();
     }
     private void Update()
     {
@@ -182,7 +185,6 @@ public class GameManager : MonoBehaviour
         {
             finalResult = false;
         }
-        int index = 0;
         //foreach (List<RuleSet> ruleList in m_rulesForbiddenSets)
         //{
         //    bool isAnd = m_rulesForbiddenSets_isAnd[index];
@@ -229,7 +231,6 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-        index = 0;
         //foreach (List<RuleSet> ruleList in m_rulesPriviledgedSets)
         //{
         //    bool isAnd = m_rulesPriviledgedSets_isAnd[index];
@@ -293,6 +294,11 @@ public class GameManager : MonoBehaviour
             {
                 ruleCDCount = 0;
                 m_ruleButton.interactable = true;
+                if(isTutorial && !tutorialShowed)
+                {
+                    FindObjectOfType<TutorialManger>().RuleTutorial();
+                    tutorialShowed = true;
+                }
             }
         }
         isPlayer = !isPlayer;
@@ -790,6 +796,11 @@ public class GameManager : MonoBehaviour
         }
         changer.Setup(color, true, maxWinStreak, currWinStreak);
         SaveData();
+        if (isTutorial)
+        {
+            StartCoroutine(ReturnToMenu(changer));
+            return;
+        }
         StartCoroutine(RestartLevel(changer));
     }
     IEnumerator RestartLevel(SceneChanger changer)
@@ -797,6 +808,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         Debug.Log(SceneManager.GetActiveScene().ToString());
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        changer.Setup(changer.Color, !changer.EndScene, maxWinStreak, currWinStreak);
+    }
+    IEnumerator ReturnToMenu(SceneChanger changer)
+    {
+        yield return new WaitForSeconds(1.5f);
+        Debug.Log(SceneManager.GetActiveScene().ToString());
+        SceneManager.LoadScene("MainMenu");
         changer.Setup(changer.Color, !changer.EndScene, maxWinStreak, currWinStreak);
     }
 

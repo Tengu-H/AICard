@@ -85,12 +85,12 @@ public class SceneChanger : MonoBehaviour
             }
         }
     }
-    public void Setup(Color color, bool endScene, int max, int curr)
+    public void Setup(Color color, bool endScene, int max = -1, int curr = -1)
     {
         m_color = color;
         m_endScene = endScene;
-        m_max.text = "最高: " + max.ToString();
-        m_curr.text = "连胜: " + curr.ToString();
+        m_max.text = max >= 0 ? "最高: " + max.ToString() : "";
+        m_curr.text = curr >= 0 ? "连胜: " + curr.ToString() : "";
         m_cover.color = m_color;
         if (endScene)
         {
