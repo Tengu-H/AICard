@@ -11362,7 +11362,7 @@ MonoBehaviour:
   tutorialPanel: {fileID: 1649900969}
   tutorialText: {fileID: 1832327708}
   tutorialMessages:
-  - "\u4F60\u597D \u6211\u662F\u5C0F\u5C0F\u6CD5\u5E08"
+  - "\u4F60\u597D \u6211\u53EB\u6A21\u62DF\u838E"
   - "\u8C22\u8C22\u4F60\u966A\u6211\u73A9"
   - "\u8FD9\u662F\u4E2A\u5361\u724C\u6E38\u620F\u54E6"
   - "\u4E5F\u8BB8\u4F60\u73A9\u8FC7\u7C7B\u4F3C\u7684\uFF01"
@@ -11371,14 +11371,13 @@ MonoBehaviour:
   - "\u90FD\u4E0D\u4E00\u6837\uFF0C\u4E5F\u6CA1\u5173\u7CFB"
   - "\u53EF\u4EE5\u5F3A\u884C\u6253\u51FA\u6765\uFF0C\u4F46\u662F\u8981\u91CD\u65B0\u62BD\u4E00\u5F20"
   - "\u5148\u6253\u5B8C\u724C\u7684\u4EBA\u83B7\u80DC"
-  - "\u8D62\u4E86\u4E5F\u6CA1\u4EC0\u4E48\u597D\u5904\u5C31\u662F\u4E86"
   - "\u6765\u5427\u6765\u5427\uFF01"
   tutorialRuleMessages:
   - "\u5BF9\u4E86 \u5FD8\u8BB0\u8BF4\u4E86"
   - "\u4F60\u53EF\u4EE5\u81EA\u5DF1\u7ED9\u8FD9\u4E2A\u6E38\u620F\u52A0\u89C4\u5219\u54E6"
   - "\u6BCF\u6253\u4E09\u5F20\u724C\uFF0C\u5C31\u53EF\u4EE5\u5199\u4E00\u4E2A"
   - "\u70B9\u5DE6\u4E0A\u89D2\u7684\u6309\u94AE\uFF0C\u544A\u8BC9\u6211\u5C31\u884C"
-  - "\u4E00\u822C\u662F\u7981\u6B62\u6253\u4E00\u4E9B\u724C\uFF0C\u6216\u8005\u7279\u8BB8\u6253\u4E00\u4E9B\u724C"
+  - "\u6BD4\u5982\u8BF4\u6C38\u8FDC\u80FD\u6253\u7EA2\u8272\u5566\uFF0C\u4E0D\u8BB8\u62532\u5566"
   - "\u6211\u4F1A\u5E2E\u4F60\u628A\u4EE3\u7801\u5199\u597D\uFF0C\u5B9E\u73B0\u51FA\u6765\uFF01"
   - "\u867D\u7136\u4E0D\u662F\u5F88\u64C5\u957F:("
   - "\u6765\u5427\u6765\u5427\uFF01"
@@ -12085,10 +12084,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
